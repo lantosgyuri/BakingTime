@@ -1,11 +1,9 @@
 package com.example.lanto.bakingtime.data;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -25,19 +23,13 @@ public class Recipe {
 
     @SerializedName("ingredients")
     @Expose
-    @Ignore
+    @TypeConverters(IngredientTypeConverter.class)
     private List<Ingredient> ingredients = null;
-
-    @ColumnInfo(name = "ingredients")
-    private String ingredientsSql;
 
     @SerializedName("steps")
     @Expose
-    @Ignore
+    @TypeConverters(StepTypeConverter.class)
     private List<Step> steps = null;
-
-    @ColumnInfo( name = "steps")
-    private String stepsSql;
 
     @SerializedName("servings")
     @Expose
@@ -93,13 +85,5 @@ public class Recipe {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public void setStepSql(List<Step> steps){
-        stepsSql = Converter.convertStepList(steps);
-    }
-
-    public void setIngredientSql(List<Ingredient> ingredients){
-        ingredientsSql = Converter.convertIngredientList(ingredients);
     }
 }
