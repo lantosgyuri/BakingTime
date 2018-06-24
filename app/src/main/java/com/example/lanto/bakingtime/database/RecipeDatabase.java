@@ -10,7 +10,6 @@ import com.example.lanto.bakingtime.data.Recipe;
 @Database(entities = {Recipe.class}, version = 1, exportSchema = false)
 public abstract class RecipeDatabase extends RoomDatabase {
 
-    private static final String LOG_TAG = RecipeDatabase.class.getSimpleName();
     private static final Object LOCK = new Object();
     private static final String DATABASE_NAME = "bakingTime";
     private static RecipeDatabase sInstance;

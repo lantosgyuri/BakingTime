@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Baking Time</string>
+    <string name="Internet_warning_toast">There is no internet connection to refresh</string>
+    <string name="No_data_warning_toast">There is no data to load</string>
 </resources>

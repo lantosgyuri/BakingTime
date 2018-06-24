@@ -1,6 +1,5 @@
 package com.example.lanto.bakingtime.ui.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -36,13 +35,14 @@ public class MainRecycleAdapter extends RecyclerView.Adapter<MainRecycleAdapter.
 
     @Override
     public int getItemCount() {
+        if(mRecipes == null) return 0;
         return mRecipes.size();
     }
 
     public class MainAdapterViewHolder extends RecyclerView.ViewHolder{
-        public TextView recipeNameTextView;
+        TextView recipeNameTextView;
 
-        public MainAdapterViewHolder(View itemView) {
+        MainAdapterViewHolder(View itemView) {
             super(itemView);
             recipeNameTextView = itemView.findViewById(R.id.main_item_text_view);
         }
