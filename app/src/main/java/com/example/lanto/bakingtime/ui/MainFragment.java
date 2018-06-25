@@ -3,6 +3,7 @@ package com.example.lanto.bakingtime.ui;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,24 +11,35 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.lanto.bakingtime.R;
+import com.example.lanto.bakingtime.data.Ingredient;
 import com.example.lanto.bakingtime.data.Recipe;
+import com.example.lanto.bakingtime.data.Step;
 import com.example.lanto.bakingtime.githubservice.Network;
 import com.example.lanto.bakingtime.ui.adapter.MainRecycleAdapter;
 import com.example.lanto.bakingtime.viewmodel.RecipeViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements MainRecycleAdapter.OnItemClickListener{
 
 
     public MainFragment (
             //empty constructor
     ){}
+
+    //interface to pass data to host activity
+    public interface mainFragmentClickListener{
+        void mainFragOnClick(Bundle bundle);
+    }
+
+    private mainFragmentClickListener mClickListener;
 
     private MainRecycleAdapter mainRecycleAdapter;
 
@@ -55,6 +67,8 @@ public class MainFragment extends Fragment {
         //set up View model
         retrieveRecipes();
 
+        //set up item click listener
+        mainRecycleAdapter.setOnItemClickListener(this);
         return rootView;
     }
 
@@ -75,4 +89,35 @@ public class MainFragment extends Fragment {
         });
     }
 
+    //send data to the host Activity
+    @Override
+    public void OnItemClick(int position) {
+        Recipe currentRecipe = mainRecycleAdapter.getItem(position);
+        //first make ArrayList from List
+        List<Ingredient> ingredientsList = currentRecipe.getIngredients();
+        ArrayList<Ingredient> ingredientArrayList = new ArrayList<>(ingredientsList.size());
+        ingredientArrayList.addAll(ingredientsList);
+
+        List<Step> stepList = currentRecipe.getSteps();
+        ArrayList<Step> stepArrayList = new ArrayList<>(stepList.size());
+        stepArrayList.addAll(stepList);
+
+        //then put in Bundle
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("Ingredients", ingredientArrayList);
+        bundle.putParcelableArrayList("Steps", stepArrayList);
+        mClickListener.mainFragOnClick(bundle);
+
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try{
+            mClickListener = (mainFragmentClickListener) context;
+        } catch (ClassCastException e){
+            throw new ClassCastException(context.toString() + "must implement interface");
+        }
+    }
 }
