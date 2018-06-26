@@ -27,9 +27,14 @@ public class StepOrIngredientActivity extends AppCompatActivity {
         if(flag == 2){
             Step currentStep = inComingIntent.getParcelableExtra("Step");
             Log.e("Harmadik Activity", "" + currentStep.getDescription());
+
+        //make an Ingredient Fragment and show it
         } else if (flag == 1){
             ArrayList<Ingredient> ingredients = inComingIntent.getParcelableArrayListExtra("Ingredients");
             Log.e("harmadik activity", "" + ingredients.get(0).getIngredient());
+
+            IngredientFragment ingredientFragment = IngredientFragment.newInstance(ingredients);
+            getSupportFragmentManager().beginTransaction().replace(R.id.step_or_ingredient_container, ingredientFragment).commit();
         }
 
     }
