@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.TextView;
 
 import com.example.lanto.bakingtime.R;
@@ -14,6 +15,12 @@ import java.util.List;
 
 public class DetailStepsAdapter extends RecyclerView.Adapter<DetailStepsAdapter.StepsViewHolder> {
     private List<Step> mStepList;
+
+    private onItemClickListener mItemClickListener;
+
+    public interface onItemClickListener{
+        void onItemClick(int position);
+    }
 
     @NonNull
     @Override
@@ -43,10 +50,27 @@ public class DetailStepsAdapter extends RecyclerView.Adapter<DetailStepsAdapter.
             super(itemView);
 
             titleTextView = itemView.findViewById(R.id.detail_step_title_text);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mItemClickListener != null) {
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            mItemClickListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
     public void setStepList(List<Step> stepList){
         mStepList = stepList;
     }
+
+    public void setItemClickListener(onItemClickListener listener){
+        mItemClickListener = listener;
+    }
+
+
 }
