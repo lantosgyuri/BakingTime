@@ -55,6 +55,7 @@ public class MainFragment extends Fragment implements MainRecycleAdapter.OnItemC
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mainRecycleAdapter = new MainRecycleAdapter();
         recyclerView.setAdapter(mainRecycleAdapter);
+        Log.e("main fragment", "betoltott");
 
         //check network connection
         if(isNetworkAvailable(getActivity())){

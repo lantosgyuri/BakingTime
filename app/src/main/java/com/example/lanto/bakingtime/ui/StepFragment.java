@@ -1,18 +1,16 @@
 package com.example.lanto.bakingtime.ui;
 
-import android.app.Fragment;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.lanto.bakingtime.R;
-import com.example.lanto.bakingtime.data.Ingredient;
 import com.example.lanto.bakingtime.data.Step;
-
-import java.util.ArrayList;
 
 public class StepFragment extends Fragment {
 

@@ -14,10 +14,15 @@ import java.util.List;
 
 public class DetailActivity extends AppCompatActivity implements DetailFragment.DetailOnClickListener{
 
+    private boolean mTwoPane;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        //check which layout is loaded (tablet or not)
+        if(findViewById(R.id.tablet_detail_container) != null) mTwoPane = true;
 
         // get Bundle
         Bundle bundle = this.getIntent().getBundleExtra("Bundle");
@@ -28,23 +33,37 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
 
             // make a new Detail fragment with the new data
             DetailFragment detailFragment = DetailFragment.newInstance(ingredientArrayList, stepArrayList);
-            getSupportFragmentManager().beginTransaction().replace(R.id.detail_fragment_container, detailFragment).commit();
+            if (mTwoPane){
+                getSupportFragmentManager().beginTransaction().replace(R.id.tablet_steps_container, detailFragment).commit();
+            } else {
+                getSupportFragmentManager().beginTransaction().replace(R.id.detail_fragment_container, detailFragment).commit();
+            }
         }
     }
 
     @Override
     public void ingredientOnClick(ArrayList<Ingredient> ingredients) {
-        Intent intent = new Intent(this, StepOrIngredientActivity.class);
-        intent.putParcelableArrayListExtra("Ingredients", ingredients);
-        intent.putExtra("FLAG", 1);
-        startActivity(intent);
+        if(!mTwoPane) {
+            Intent intent = new Intent(this, StepOrIngredientActivity.class);
+            intent.putParcelableArrayListExtra("Ingredients", ingredients);
+            intent.putExtra("FLAG", 1);
+            startActivity(intent);
+        } else {
+            IngredientFragment ingredientFragment = IngredientFragment.newInstance(ingredients);
+            getSupportFragmentManager().beginTransaction().replace(R.id.tablet_detail_container, ingredientFragment).commit();
+        }
     }
 
     @Override
     public void stepOnClick(Step step) {
-        Intent intent = new Intent(this, StepOrIngredientActivity.class);
-        intent.putExtra("Step", step);
-        intent.putExtra("FLAG", 2);
-        startActivity(intent);
+        if(!mTwoPane) {
+            Intent intent = new Intent(this, StepOrIngredientActivity.class);
+            intent.putExtra("Step", step);
+            intent.putExtra("FLAG", 2);
+            startActivity(intent);
+        } else {
+            StepFragment stepFragment = StepFragment.newInstance(step);
+            getSupportFragmentManager().beginTransaction().replace(R.id.tablet_detail_container, stepFragment).commit();
+        }
     }
 }
