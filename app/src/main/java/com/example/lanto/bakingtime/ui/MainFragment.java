@@ -29,6 +29,12 @@ import java.util.ArrayList;
 import java.util.List;
 public class MainFragment extends Fragment implements MainRecycleAdapter.OnItemClickListener{
 
+    public static final String BUN_INGREDIENT = "Ingredients";
+    public static final String BUN_STEP = "Steps";
+    public static final String BUN_RECIPENAME = "RecipeName";
+
+    private mainFragmentClickListener mClickListener;
+    private MainRecycleAdapter mainRecycleAdapter;
 
     public MainFragment (
             //empty constructor
@@ -38,10 +44,6 @@ public class MainFragment extends Fragment implements MainRecycleAdapter.OnItemC
     public interface mainFragmentClickListener{
         void mainFragOnClick(Bundle bundle);
     }
-
-    private mainFragmentClickListener mClickListener;
-
-    private MainRecycleAdapter mainRecycleAdapter;
 
     @Nullable
     @Override
@@ -55,7 +57,6 @@ public class MainFragment extends Fragment implements MainRecycleAdapter.OnItemC
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mainRecycleAdapter = new MainRecycleAdapter();
         recyclerView.setAdapter(mainRecycleAdapter);
-        Log.e("main fragment", "betoltott");
 
         //check network connection
         if(isNetworkAvailable(getActivity())){
@@ -94,6 +95,8 @@ public class MainFragment extends Fragment implements MainRecycleAdapter.OnItemC
     @Override
     public void OnItemClick(int position) {
         Recipe currentRecipe = mainRecycleAdapter.getItem(position);
+        // get recipe name
+        String recipeName = currentRecipe.getName();
         //first make ArrayList from List
         List<Ingredient> ingredientsList = currentRecipe.getIngredients();
         ArrayList<Ingredient> ingredientArrayList = new ArrayList<>(ingredientsList.size());
@@ -105,8 +108,9 @@ public class MainFragment extends Fragment implements MainRecycleAdapter.OnItemC
 
         //then put in Bundle
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("Ingredients", ingredientArrayList);
-        bundle.putParcelableArrayList("Steps", stepArrayList);
+        bundle.putString(BUN_RECIPENAME, recipeName);
+        bundle.putParcelableArrayList(BUN_INGREDIENT, ingredientArrayList);
+        bundle.putParcelableArrayList(BUN_STEP, stepArrayList);
         mClickListener.mainFragOnClick(bundle);
 
     }

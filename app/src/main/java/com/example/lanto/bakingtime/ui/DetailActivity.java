@@ -3,18 +3,23 @@ package com.example.lanto.bakingtime.ui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.lanto.bakingtime.R;
 import com.example.lanto.bakingtime.data.Ingredient;
 import com.example.lanto.bakingtime.data.Step;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DetailActivity extends AppCompatActivity implements DetailFragment.DetailOnClickListener{
 
+    public static final String INTENT_INGREDIENTS = "Ingredients";
+    public static final String INTENT_STEP = "Step";
+    public static final String INT_FLAG = "FLAG";
+
+    public static final int INGREDIENT = 1;
+    public static final int STEP = 2;
     private boolean mTwoPane;
+    private String recipeName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +30,14 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
         if(findViewById(R.id.tablet_detail_container) != null) mTwoPane = true;
 
         // get Bundle
-        Bundle bundle = this.getIntent().getBundleExtra("Bundle");
+        Bundle bundle = this.getIntent().getBundleExtra(MainActivity.BUN_BUNDLE);
         if(bundle != null) {
+            //set the title with the recipe name
+            recipeName = bundle.getString(MainFragment.BUN_RECIPENAME);
+            setTitle(recipeName);
             //get Ingredient and Step ArrayLists from bundle
-            ArrayList<Ingredient> ingredientArrayList = bundle.getParcelableArrayList("Ingredients");
-            ArrayList<Step> stepArrayList = bundle.getParcelableArrayList("Steps");
+            ArrayList<Ingredient> ingredientArrayList = bundle.getParcelableArrayList(MainFragment.BUN_INGREDIENT);
+            ArrayList<Step> stepArrayList = bundle.getParcelableArrayList(MainFragment.BUN_STEP);
 
             // make a new Detail fragment with the new data
             DetailFragment detailFragment = DetailFragment.newInstance(ingredientArrayList, stepArrayList);
@@ -45,8 +53,9 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
     public void ingredientOnClick(ArrayList<Ingredient> ingredients) {
         if(!mTwoPane) {
             Intent intent = new Intent(this, StepOrIngredientActivity.class);
-            intent.putParcelableArrayListExtra("Ingredients", ingredients);
-            intent.putExtra("FLAG", 1);
+            intent.putParcelableArrayListExtra(INTENT_INGREDIENTS, ingredients);
+            intent.putExtra(INT_FLAG, INGREDIENT);
+            intent.putExtra(MainFragment.BUN_RECIPENAME, recipeName);
             startActivity(intent);
         } else {
             IngredientFragment ingredientFragment = IngredientFragment.newInstance(ingredients);
@@ -58,8 +67,9 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
     public void stepOnClick(Step step) {
         if(!mTwoPane) {
             Intent intent = new Intent(this, StepOrIngredientActivity.class);
-            intent.putExtra("Step", step);
-            intent.putExtra("FLAG", 2);
+            intent.putExtra(INTENT_STEP, step);
+            intent.putExtra(INT_FLAG, STEP);
+            intent.putExtra(MainFragment.BUN_RECIPENAME, recipeName);
             startActivity(intent);
         } else {
             StepFragment stepFragment = StepFragment.newInstance(step);

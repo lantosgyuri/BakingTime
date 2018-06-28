@@ -35,7 +35,6 @@ public class MainRecycleAdapter extends RecyclerView.Adapter<MainRecycleAdapter.
     public void onBindViewHolder(@NonNull MainAdapterViewHolder holder, int position) {
         Recipe recipe = mRecipes.get(position);
         holder.recipeNameTextView.setText(recipe.getName());
-        Log.e("Adapter", "" + recipe.getName());
     }
 
     @Override

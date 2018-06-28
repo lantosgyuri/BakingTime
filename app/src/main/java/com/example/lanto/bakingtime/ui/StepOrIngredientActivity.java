@@ -3,14 +3,12 @@ package com.example.lanto.bakingtime.ui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.lanto.bakingtime.R;
 import com.example.lanto.bakingtime.data.Ingredient;
 import com.example.lanto.bakingtime.data.Step;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class StepOrIngredientActivity extends AppCompatActivity {
 
@@ -21,20 +19,20 @@ public class StepOrIngredientActivity extends AppCompatActivity {
 
         Intent inComingIntent = getIntent();
 
-        int flag = inComingIntent.getIntExtra("FLAG", 0);
-        Log.e("Harmadik Activity", "" + flag);
+        //set the title
+        setTitle(inComingIntent.getStringExtra(MainFragment.BUN_RECIPENAME));
 
-        if(flag == 2){
-            Step currentStep = inComingIntent.getParcelableExtra("Step");
-            Log.e("Harmadik Activity", "" + currentStep.getDescription());
+        int flag = inComingIntent.getIntExtra(DetailActivity.INT_FLAG, 0);
+
+        if(flag == DetailActivity.STEP){
+            Step currentStep = inComingIntent.getParcelableExtra(DetailActivity.INTENT_STEP);
 
             StepFragment stepFragment = StepFragment.newInstance(currentStep);
             getSupportFragmentManager().beginTransaction().replace(R.id.step_or_ingredient_container, stepFragment).commit();
 
         //make an Ingredient Fragment and show it
-        } else if (flag == 1){
-            ArrayList<Ingredient> ingredients = inComingIntent.getParcelableArrayListExtra("Ingredients");
-            Log.e("harmadik activity", "" + ingredients.get(0).getIngredient());
+        } else if (flag == DetailActivity.INGREDIENT){
+            ArrayList<Ingredient> ingredients = inComingIntent.getParcelableArrayListExtra(DetailActivity.INTENT_INGREDIENTS);
 
             IngredientFragment ingredientFragment = IngredientFragment.newInstance(ingredients);
             getSupportFragmentManager().beginTransaction().replace(R.id.step_or_ingredient_container, ingredientFragment).commit();
