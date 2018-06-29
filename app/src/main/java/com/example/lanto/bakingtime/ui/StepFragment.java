@@ -1,26 +1,29 @@
 package com.example.lanto.bakingtime.ui;
 
 
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.lanto.bakingtime.R;
 import com.example.lanto.bakingtime.data.Step;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.Timeline;
-import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
@@ -43,7 +46,6 @@ public class StepFragment extends Fragment {
     private DefaultBandwidthMeter mBandwidthMeter;
     private DataSource.Factory mMediaDataSourceFactory;
     private DefaultTrackSelector mTrackSelector;
-    private boolean autoPlay;
 
     //make new Fragment with the new Data
     public static StepFragment newInstance(Step step) {
@@ -69,13 +71,18 @@ public class StepFragment extends Fragment {
         }
 
         mDescriptionTextView.setText(mDescription);
-        autoPlay = true;
 
+        if(mExoPlayer != null) {
+            mPlayerView.setPlayer(mExoPlayer);
+        }
         initializePlayer(mUrl);
+
+        checkScreenMode();
 
         return rootView;
     }
 
+    //initialize ExoPlayer
     private void initializePlayer(String url){
         mPlayerView.requestFocus();
 
@@ -87,7 +94,7 @@ public class StepFragment extends Fragment {
 
         mExoPlayer = ExoPlayerFactory.newSimpleInstance(getActivity(), mTrackSelector);
 
-        mExoPlayer.setPlayWhenReady(autoPlay);
+        mExoPlayer.setPlayWhenReady(true);
 
         mMediaDataSourceFactory = new DefaultDataSourceFactory(getActivity(),
                 Util.getUserAgent(getActivity(), "BakingTime"), mBandwidthMeter);
@@ -96,7 +103,45 @@ public class StepFragment extends Fragment {
                 .createMediaSource(Uri.parse(url));
 
         mExoPlayer.prepare(mediaSource);
+        //set playerView to always Fit in the screen
+        mPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
         mPlayerView.setPlayer(mExoPlayer);
 
+    }
+
+    //release player
+    private void releasePlayer(){
+        mExoPlayer.release();
+        mExoPlayer = null;
+        mTrackSelector = null;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        //release player just when fragment completely destroyed
+        if(!getActivity().isChangingConfigurations()){
+            releasePlayer();
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        checkScreenMode();
+    }
+
+    private void checkScreenMode(){
+        //checking is there a Landscape or Portrait mode
+        if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
+            //hide the Textview and the ActionBar
+            mDescriptionTextView.setVisibility(View.GONE);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            //show actionBar and Textview
+            mDescriptionTextView.setVisibility(View.VISIBLE);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+        }
     }
 }

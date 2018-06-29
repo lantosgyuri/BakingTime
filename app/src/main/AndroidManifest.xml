@@ -19,8 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.DetailActivity" />
-        <activity android:name=".ui.StepOrIngredientActivity"/>
+        <activity android:name=".ui.DetailActivity"
+            android:configChanges="orientation|screenSize|layoutDirection"/>
+        <activity android:name=".ui.StepOrIngredientActivity"
+            android:configChanges="orientation|screenSize|layoutDirection"/>
     </application>
 
 </manifest>
