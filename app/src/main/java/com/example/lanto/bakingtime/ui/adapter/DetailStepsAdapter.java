@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lanto.bakingtime.R;
@@ -34,6 +35,7 @@ public class DetailStepsAdapter extends RecyclerView.Adapter<DetailStepsAdapter.
     public void onBindViewHolder(@NonNull StepsViewHolder holder, int position) {
         Step currentStep = mStepList.get(position);
         holder.titleTextView.setText(currentStep.getShortDescription());
+        holder.imageView.setImageResource(R.drawable.img_211437);
 
     }
 
@@ -45,10 +47,12 @@ public class DetailStepsAdapter extends RecyclerView.Adapter<DetailStepsAdapter.
 
     public class StepsViewHolder extends RecyclerView.ViewHolder{
         TextView titleTextView;
+        ImageView imageView;
 
         public StepsViewHolder(View itemView) {
             super(itemView);
 
+            imageView = itemView.findViewById(R.id.detail_step_image);
             titleTextView = itemView.findViewById(R.id.detail_step_title_text);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

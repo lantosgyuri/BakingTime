@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="dessert_icons">
+        <item>@drawable/pie</item>
+        <item>@drawable/brownies</item>
+        <item>@drawable/yellow_cake</item>
+        <item>@drawable/cheesecake</item>
+    </integer-array>
+</resources>

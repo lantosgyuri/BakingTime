@@ -73,7 +73,7 @@ public class MainFragment extends Fragment implements MainRecycleAdapter.OnItemC
         //set up RecycleView
         recyclerView = rootView.findViewById(R.id.fragment_main_recycler_view);
         recyclerView.setHasFixedSize(true);
-        mainRecycleAdapter = new MainRecycleAdapter();
+        mainRecycleAdapter = new MainRecycleAdapter(getActivity());
         recyclerView.setAdapter(mainRecycleAdapter);
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
