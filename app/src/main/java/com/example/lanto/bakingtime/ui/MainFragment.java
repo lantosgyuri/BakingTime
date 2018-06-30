@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -29,12 +30,20 @@ import java.util.ArrayList;
 import java.util.List;
 public class MainFragment extends Fragment implements MainRecycleAdapter.OnItemClickListener{
 
+    //constant
     public static final String BUN_INGREDIENT = "Ingredients";
     public static final String BUN_STEP = "Steps";
     public static final String BUN_RECIPENAME = "RecipeName";
+    public static final String RECYCLEVIEW_STATE = "state";
 
+    //recycle view
     private mainFragmentClickListener mClickListener;
     private MainRecycleAdapter mainRecycleAdapter;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    //recycle view save scrolled state
+    private Parcelable mRecycleState;
 
     public MainFragment (
             //empty constructor
@@ -51,19 +60,36 @@ public class MainFragment extends Fragment implements MainRecycleAdapter.OnItemC
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+        /*
+        get layout position from saved state,
+        or make a new layout manager
+         */
+        if(savedInstanceState != null){
+            mRecycleState = savedInstanceState.getParcelable(RECYCLEVIEW_STATE);
+            Log.e("onrestore", " megihvotott" );
+        }
+
+
         //set up RecycleView
-        final RecyclerView recyclerView = rootView.findViewById(R.id.fragment_main_recycler_view);
+        recyclerView = rootView.findViewById(R.id.fragment_main_recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mainRecycleAdapter = new MainRecycleAdapter();
         recyclerView.setAdapter(mainRecycleAdapter);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(mLayoutManager);
+        if (mRecycleState != null) recyclerView.getLayoutManager().onRestoreInstanceState(mRecycleState);
 
-        //check network connection
-        if(isNetworkAvailable(getActivity())){
-            //refresh database
-            Network.getRecipesAndSaveInDB(getActivity());
-        } else {
-            Toast.makeText(getActivity(), R.string.Internet_warning_toast, Toast.LENGTH_LONG).show();
+        /*
+        check network connection and the need of a refresh.
+        if savedInstanceState != null than we don't need to refresh
+         */
+        if(savedInstanceState == null) {
+            if (isNetworkAvailable(getActivity())) {
+                //refresh database
+                Network.getRecipesAndSaveInDB(getActivity());
+            }else {
+                Toast.makeText(getActivity(), R.string.Internet_warning_toast, Toast.LENGTH_LONG).show();
+            }
         }
 
         //set up View model
@@ -123,6 +149,21 @@ public class MainFragment extends Fragment implements MainRecycleAdapter.OnItemC
             mClickListener = (mainFragmentClickListener) context;
         } catch (ClassCastException e){
             throw new ClassCastException(context.toString() + "must implement interface");
+        }
+    }
+
+    //save recycle view state
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(RECYCLEVIEW_STATE, recyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mRecycleState != null){
+            mLayoutManager.onRestoreInstanceState(mRecycleState);
         }
     }
 }

@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.main
 
     public static final String BUN_BUNDLE = "Bundle";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +25,5 @@ public class MainActivity extends AppCompatActivity implements MainFragment.main
         intent.putExtra(BUN_BUNDLE, bundle);
         startActivity(intent);
     }
-
-
 
 }
