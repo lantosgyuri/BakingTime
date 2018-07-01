@@ -1,5 +1,6 @@
 package com.example.lanto.bakingtime.ui.adapter;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import java.util.List;
 
 public class DetailStepsAdapter extends RecyclerView.Adapter<DetailStepsAdapter.StepsViewHolder> {
     private List<Step> mStepList;
+    private int selectedPos = RecyclerView.NO_POSITION;
 
     private onItemClickListener mItemClickListener;
 
@@ -34,6 +36,7 @@ public class DetailStepsAdapter extends RecyclerView.Adapter<DetailStepsAdapter.
     @Override
     public void onBindViewHolder(@NonNull StepsViewHolder holder, int position) {
         Step currentStep = mStepList.get(position);
+        holder.itemView.setBackgroundColor(selectedPos == position ? Color.LTGRAY: Color.TRANSPARENT);
         holder.titleTextView.setText(currentStep.getShortDescription());
         holder.imageView.setImageResource(R.drawable.img_211437);
 
@@ -57,6 +60,11 @@ public class DetailStepsAdapter extends RecyclerView.Adapter<DetailStepsAdapter.
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //set color to selected item
+                    notifyItemChanged(selectedPos);
+                    selectedPos = getLayoutPosition();
+                    notifyItemChanged(selectedPos);
+                    //
                     if (mItemClickListener != null) {
                         int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION){

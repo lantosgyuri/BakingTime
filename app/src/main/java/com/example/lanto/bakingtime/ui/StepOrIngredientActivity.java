@@ -24,6 +24,7 @@ public class StepOrIngredientActivity extends AppCompatActivity {
 
         int flag = inComingIntent.getIntExtra(DetailActivity.INT_FLAG, 0);
 
+        //make a step fragment
         if(flag == DetailActivity.STEP){
             Step currentStep = inComingIntent.getParcelableExtra(DetailActivity.INTENT_STEP);
 

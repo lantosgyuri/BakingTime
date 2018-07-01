@@ -8,7 +8,7 @@
     
     <FrameLayout
         android:id="@+id/tablet_steps_container"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="match_parent">
     </FrameLayout>
     
