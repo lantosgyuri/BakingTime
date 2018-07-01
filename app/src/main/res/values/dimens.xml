@@ -7,4 +7,11 @@
     <dimen name="ingredient_button_text_padding">20dp</dimen>
     <dimen name="ingredients_button_margin_top">20dp</dimen>
     <dimen name="detail_step_padding">20dp</dimen>
+    <dimen name="ingredient_item_quantity_margin">10dp</dimen>
+    <dimen name="item_name_margin_bottom">5dp</dimen>
+    <dimen name="item_ingredient_margin">15dp</dimen>
+    <dimen name="step_description_margin">10dp</dimen>
+    <dimen name="detail_fragment_top_margin">10dp</dimen>
+    <dimen name="step_navigation_button_padding">20dp</dimen>
+    <dimen name="step_navigation_button_margin_right">30dp</dimen>
 </resources>

@@ -30,6 +30,8 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import static android.view.View.GONE;
+
 public class StepFragment extends Fragment {
 
     private static final String ARG_STEP = "argStep";
@@ -72,10 +74,14 @@ public class StepFragment extends Fragment {
 
         mDescriptionTextView.setText(mDescription);
 
+        //if there is no video to play than we don't need the playerview
+        if(mUrl.length() == 0){
+            mPlayerView.setVisibility(GONE);
+        } else   initializePlayer(mUrl);
+
         if(mExoPlayer != null) {
             mPlayerView.setPlayer(mExoPlayer);
         }
-        initializePlayer(mUrl);
 
         checkScreenMode();
 
@@ -119,8 +125,8 @@ public class StepFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        //release player just when fragment completely destroyed
-        if(!getActivity().isChangingConfigurations()){
+        //release player just when user navigates away
+        if(!getActivity().isChangingConfigurations() && mExoPlayer != null){
             releasePlayer();
         }
     }
@@ -132,16 +138,18 @@ public class StepFragment extends Fragment {
         checkScreenMode();
     }
 
-    private void checkScreenMode(){
-        //checking is there a Landscape or Portrait mode
-        if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
-            //hide the Textview and the ActionBar
-            mDescriptionTextView.setVisibility(View.GONE);
-            ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            //show actionBar and Textview
-            mDescriptionTextView.setVisibility(View.VISIBLE);
-            ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+    private void checkScreenMode() {
+        if (mUrl.length() != 0) {
+            //checking is there a Landscape or Portrait mode
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                //hide the Textview and the ActionBar
+                mDescriptionTextView.setVisibility(GONE);
+                ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+            } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                //show actionBar and Textview
+                mDescriptionTextView.setVisibility(View.VISIBLE);
+                ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+            }
         }
     }
 }
