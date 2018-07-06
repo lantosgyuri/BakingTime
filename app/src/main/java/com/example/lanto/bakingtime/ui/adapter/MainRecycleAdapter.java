@@ -50,8 +50,7 @@ public class MainRecycleAdapter extends RecyclerView.Adapter<MainRecycleAdapter.
 
     @Override
     public int getItemCount() {
-        if(mRecipes == null) return 0;
-        return mRecipes.size();
+        return mRecipes == null ? 0 : mRecipes.size();
     }
 
     public class MainAdapterViewHolder extends RecyclerView.ViewHolder{

@@ -19,10 +19,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.DetailActivity"
-            android:configChanges="orientation|screenSize|layoutDirection"/>
-        <activity android:name=".ui.StepOrIngredientActivity"
-            android:configChanges="orientation|screenSize|layoutDirection"/>
+        <activity
+            android:name=".ui.DetailActivity"
+            android:configChanges="orientation|screenSize|layoutDirection" />
+        <activity
+            android:name=".ui.StepOrIngredientActivity"
+            android:configChanges="orientation|screenSize|layoutDirection" />
+
+        <receiver android:name=".widget.BakingTimeWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.example.lanto.bakingtime.action.set_recipe"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/baking_time_widget_info" />
+        </receiver>
+        <service android:name=".widget.WidgeIntentService" />
+        <service android:name=".widget.LinearWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 
 </manifest>

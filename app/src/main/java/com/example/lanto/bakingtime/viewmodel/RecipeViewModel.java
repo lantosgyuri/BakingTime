@@ -18,7 +18,6 @@ public class RecipeViewModel extends AndroidViewModel {
     public RecipeViewModel(@NonNull Application application) {
         super(application);
         final RecipeDatabase db = RecipeDatabase.getsInstance(this.getApplication());
-        Log.e("viewmodell", " viewmodell frissitve van");
         mRecipes = db.recipeDao().loadAllRecipe();
     }
 

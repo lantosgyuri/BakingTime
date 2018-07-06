@@ -3,6 +3,7 @@ package com.example.lanto.bakingtime.githubservice;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.lanto.bakingtime.AppExecutors;
 import com.example.lanto.bakingtime.data.Recipe;
 import com.example.lanto.bakingtime.database.RecipeDatabase;
 
@@ -26,7 +27,6 @@ public class Network {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 List<Recipe> recipeList = response.body();
-                Log.e("retrofit,"," " + recipeList.get(0).getName());
                 saveInDb(context, recipeList);
 
             }
@@ -42,10 +42,9 @@ public class Network {
         final RecipeDatabase db = RecipeDatabase.getsInstance(context);
 
         //BG thread to insert
-        Executors.newSingleThreadExecutor().execute(new Runnable() {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                //make array from list to bulk insert
                 Recipe[] recipeArray = new Recipe[recipes.size()];
                 recipeArray = recipes.toArray(recipeArray);
                 db.recipeDao().bulkInsert(recipeArray);

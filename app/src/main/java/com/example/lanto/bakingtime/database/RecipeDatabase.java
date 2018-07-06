@@ -19,7 +19,10 @@ public abstract class RecipeDatabase extends RoomDatabase {
             synchronized (LOCK){
                 sInstance = Room.databaseBuilder(context.getApplicationContext(),
                         RecipeDatabase.class,
-                        RecipeDatabase.DATABASE_NAME).build();
+                        RecipeDatabase.DATABASE_NAME)
+                        .allowMainThreadQueries()
+                        .build();
+
             }
         }
         return sInstance;

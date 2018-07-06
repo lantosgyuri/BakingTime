@@ -44,8 +44,7 @@ public class DetailStepsAdapter extends RecyclerView.Adapter<DetailStepsAdapter.
 
     @Override
     public int getItemCount() {
-        if(mStepList == null) return 0;
-        return mStepList.size();
+        return mStepList == null ? 0 : mStepList.size();
     }
 
     public class StepsViewHolder extends RecyclerView.ViewHolder{

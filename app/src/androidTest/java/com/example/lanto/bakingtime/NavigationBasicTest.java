@@ -18,7 +18,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(JUnit4.class)
-public class MainActivityBasicTest {
+public class NavigationBasicTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule =

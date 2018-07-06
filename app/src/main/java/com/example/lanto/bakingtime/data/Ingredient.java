@@ -2,6 +2,7 @@ package com.example.lanto.bakingtime.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -10,7 +11,7 @@ public class Ingredient implements Parcelable{
 
     @SerializedName("quantity")
     @Expose
-    private double quantity;
+    private Double quantity;
     @SerializedName("measure")
     @Expose
     private String measure;
@@ -22,6 +23,12 @@ public class Ingredient implements Parcelable{
         quantity = in.readDouble();
         measure = in.readString();
         ingredient = in.readString();
+    }
+
+    public Ingredient(Double quantity, String measure, String ingredient) {
+        this.quantity = quantity;
+        this.measure = measure;
+        this.ingredient = ingredient;
     }
 
     public static final Creator<Ingredient> CREATOR = new Creator<Ingredient>() {
@@ -36,11 +43,11 @@ public class Ingredient implements Parcelable{
         }
     };
 
-    public double getQuantity() {
+    public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
 
