@@ -1,7 +1,8 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Baking Time</string>
     <string name="Internet_warning_toast">There is no internet connection to refresh</string>
-    <string name="No_data_warning_toast">There is no data to load</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+    <string name="No_data_warning_toast" tools:keep="@string/No_data_warning_toast">There is no data to load</string>
+    <string name="add_widget" tools:keep="@string/add_widget">Add widget</string>
+    <string name="ingredients_button_text">Ingredients</string>
+    <string name="ingredient_list_quantity_text">Quantity: \u0020</string>
 </resources>

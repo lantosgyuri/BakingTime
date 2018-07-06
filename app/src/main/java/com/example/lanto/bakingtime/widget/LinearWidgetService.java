@@ -27,7 +27,7 @@ public class LinearWidgetService extends RemoteViewsService {
 
 class LinearRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory{
 
-    private Context mContext;
+    private final Context mContext;
     private List<Ingredient> mIngredients;
 
     public LinearRemoteViewsFactory(Context context){

@@ -1,14 +1,12 @@
 package com.example.lanto.bakingtime.ui;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import com.example.lanto.bakingtime.data.Step;
 import com.example.lanto.bakingtime.ui.adapter.DetailStepsAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DetailFragment extends Fragment {
 
@@ -29,8 +26,6 @@ public class DetailFragment extends Fragment {
 
     private ArrayList<Ingredient> ingredientsList;
     private ArrayList<Step> stepList;
-
-    private Button ingredientsButton;
 
     private DetailOnClickListener clickListener;
 
@@ -55,7 +50,7 @@ public class DetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        ingredientsButton = rootView.findViewById(R.id.detail_ingredients_button);
+        Button ingredientsButton = rootView.findViewById(R.id.detail_ingredients_button);
 
         if (getArguments() != null) {
             ingredientsList = getArguments().getParcelableArrayList(ARG_INGREDIENTS);

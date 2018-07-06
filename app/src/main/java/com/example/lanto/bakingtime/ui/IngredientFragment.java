@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.example.lanto.bakingtime.R;
 import com.example.lanto.bakingtime.data.Ingredient;
-import com.example.lanto.bakingtime.data.Step;
 import com.example.lanto.bakingtime.ui.adapter.IngredientAdapter;
 
 import java.util.ArrayList;

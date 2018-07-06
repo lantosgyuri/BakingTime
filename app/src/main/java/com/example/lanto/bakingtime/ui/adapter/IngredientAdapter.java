@@ -11,7 +11,6 @@ import com.example.lanto.bakingtime.R;
 import com.example.lanto.bakingtime.data.Ingredient;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
 
@@ -31,7 +30,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         Ingredient currentIngredient = mIngredientList.get(position);
 
         holder.nameTextView.setText(currentIngredient.getIngredient());
-        holder.quantityTextView.setText("" + currentIngredient.getQuantity());
+        holder.quantityTextView.setText(currentIngredient.getQuantity().toString());
         holder.measureTextView.setText(currentIngredient.getMeasure());
     }
 
@@ -41,11 +40,11 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView nameTextView;
-        private TextView quantityTextView;
-        private TextView measureTextView;
+        private final TextView nameTextView;
+        private final TextView quantityTextView;
+        private final TextView measureTextView;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
 
             nameTextView = itemView.findViewById(R.id.ingredient_name);

@@ -3,7 +3,6 @@ package com.example.lanto.bakingtime.ui;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -34,7 +33,7 @@ public class MainFragment extends Fragment implements MainRecycleAdapter.OnItemC
     public static final String BUN_INGREDIENT = "Ingredients";
     public static final String BUN_STEP = "Steps";
     public static final String BUN_RECIPENAME = "RecipeName";
-    public static final String RECYCLEVIEW_STATE = "state";
+    private static final String RECYCLEVIEW_STATE = "state";
 
     //recycle view
     private mainFragmentClickListener mClickListener;

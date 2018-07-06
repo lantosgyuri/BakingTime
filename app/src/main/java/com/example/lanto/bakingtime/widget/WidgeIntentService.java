@@ -40,7 +40,7 @@ public class WidgeIntentService extends IntentService {
         }
     }
 
-    private int setNextRecipeName(int maximumPosition){
+    private void setNextRecipeName(int maximumPosition){
         //first get the last saved position
         SharedPreferences sp = getSharedPreferences(PREF_NAME, Activity.MODE_PRIVATE);
         int position = sp.getInt(INT_VALUE_KEY, 0);
@@ -53,7 +53,7 @@ public class WidgeIntentService extends IntentService {
         SharedPreferences sharedPrefs = this.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putInt(INT_VALUE_KEY, position);
-        editor.commit();
+        editor.apply();
 
         //update the widget
         AppWidgetManager manager = AppWidgetManager.getInstance(this);
@@ -62,6 +62,5 @@ public class WidgeIntentService extends IntentService {
         //notify LinearWidgetService to update the ListView
         manager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list_view);
 
-        return position;
     }
 }

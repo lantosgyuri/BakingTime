@@ -11,7 +11,7 @@ import java.util.List;
 
 public class StepTypeConverter {
 
-    private static Gson gson = new Gson();
+    private static final Gson gson = new Gson();
 
     @TypeConverter
     public static List<Step> stringToStepList(String json) {

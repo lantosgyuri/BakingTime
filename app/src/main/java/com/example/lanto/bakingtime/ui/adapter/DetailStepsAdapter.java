@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,10 +47,10 @@ public class DetailStepsAdapter extends RecyclerView.Adapter<DetailStepsAdapter.
     }
 
     public class StepsViewHolder extends RecyclerView.ViewHolder{
-        TextView titleTextView;
-        ImageView imageView;
+        final TextView titleTextView;
+        final ImageView imageView;
 
-        public StepsViewHolder(View itemView) {
+        StepsViewHolder(View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.detail_step_image);

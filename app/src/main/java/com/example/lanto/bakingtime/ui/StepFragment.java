@@ -10,8 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.lanto.bakingtime.R;
@@ -36,17 +34,13 @@ public class StepFragment extends Fragment {
 
     private static final String ARG_STEP = "argStep";
 
-    private Step mStep;
     private String mDescription;
     private String mUrl;
-    private String mThumbnailUrl;
 
     private TextView mDescriptionTextView;
     private PlayerView mPlayerView;
 
     private SimpleExoPlayer mExoPlayer;
-    private DefaultBandwidthMeter mBandwidthMeter;
-    private DataSource.Factory mMediaDataSourceFactory;
     private DefaultTrackSelector mTrackSelector;
 
     //make new Fragment with the new Data
@@ -66,10 +60,9 @@ public class StepFragment extends Fragment {
         mPlayerView = rootView.findViewById(R.id.player_view);
 
         if(getArguments() != null){
-            mStep = getArguments().getParcelable(ARG_STEP);
+            Step mStep = getArguments().getParcelable(ARG_STEP);
             mDescription = mStep.getDescription();
             mUrl = mStep.getVideoURL();
-            mThumbnailUrl = mStep.getThumbnailURL();
         }
 
         mDescriptionTextView.setText(mDescription);
@@ -92,7 +85,7 @@ public class StepFragment extends Fragment {
     private void initializePlayer(String url){
         mPlayerView.requestFocus();
 
-        mBandwidthMeter = new DefaultBandwidthMeter();
+        DefaultBandwidthMeter mBandwidthMeter = new DefaultBandwidthMeter();
 
         TrackSelection.Factory videoTrackSelectionFactory =
                 new AdaptiveTrackSelection.Factory(mBandwidthMeter);
@@ -102,7 +95,7 @@ public class StepFragment extends Fragment {
 
         mExoPlayer.setPlayWhenReady(true);
 
-        mMediaDataSourceFactory = new DefaultDataSourceFactory(getActivity(),
+        DataSource.Factory mMediaDataSourceFactory = new DefaultDataSourceFactory(getActivity(),
                 Util.getUserAgent(getActivity(), "BakingTime"), mBandwidthMeter);
 
         MediaSource mediaSource = new ExtractorMediaSource.Factory(mMediaDataSourceFactory)

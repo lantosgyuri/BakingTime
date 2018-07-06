@@ -6,19 +6,19 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 //Retrofit client generator
-public class ServiceGenerator {
+class ServiceGenerator {
 
-    public static final String BASE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/";
+    private static final String BASE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/";
 
-    private static Retrofit.Builder builder = new Retrofit.Builder()
+    private static final Retrofit.Builder builder = new Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create());
 
     private static Retrofit retrofit = builder.build();
 
     //add logging
-    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-    private static HttpLoggingInterceptor logging =
+    private static final OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+    private static final HttpLoggingInterceptor logging =
             new HttpLoggingInterceptor()
                     .setLevel(HttpLoggingInterceptor.Level.BODY);
 

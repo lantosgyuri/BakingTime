@@ -1,11 +1,8 @@
 package com.example.lanto.bakingtime.ui;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.RelativeLayout;
 
 import com.example.lanto.bakingtime.R;
 import com.example.lanto.bakingtime.data.Ingredient;

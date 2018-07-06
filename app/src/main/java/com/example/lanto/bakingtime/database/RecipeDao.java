@@ -6,7 +6,6 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.example.lanto.bakingtime.data.Ingredient;
 import com.example.lanto.bakingtime.data.Recipe;
 
 import java.util.List;

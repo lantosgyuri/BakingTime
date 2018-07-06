@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.example.lanto.bakingtime.R;
@@ -26,8 +24,8 @@ public class BakingTimeWidget extends AppWidgetProvider {
 
     public static final String MAXIMUM_POSITION = "max_position";
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                        int appWidgetId) {
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_time_widget);
@@ -74,7 +72,7 @@ public class BakingTimeWidget extends AppWidgetProvider {
     }
 
     //helper method to crate a string array from recipe names
-    public static List<String> getRecipeNames(Context context){
+    private static List<String> getRecipeNames(Context context){
         final RecipeDatabase db = RecipeDatabase.getsInstance(context);
         return db.recipeDao().loadAllRecipeName();
 

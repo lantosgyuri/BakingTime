@@ -7,9 +7,7 @@ import com.example.lanto.bakingtime.AppExecutors;
 import com.example.lanto.bakingtime.data.Recipe;
 import com.example.lanto.bakingtime.database.RecipeDatabase;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,7 +36,7 @@ public class Network {
         });
     }
 
-    public static void saveInDb(Context context, final List<Recipe> recipes){
+    private static void saveInDb(Context context, final List<Recipe> recipes){
         final RecipeDatabase db = RecipeDatabase.getsInstance(context);
 
         //BG thread to insert

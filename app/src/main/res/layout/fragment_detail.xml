@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ingredients_button_margin_top"
         android:layout_marginBottom="@dimen/ingredients_button_margin_top"
-        android:text="Ingredients"
+        android:text="@string/ingredients_button_text"
         android:padding="@dimen/ingredient_button_text_padding"
         android:textColor="@android:color/white"
         android:background="@drawable/ingredient_button_bg"/>

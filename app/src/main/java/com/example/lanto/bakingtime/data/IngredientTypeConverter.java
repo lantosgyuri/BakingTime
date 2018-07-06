@@ -11,7 +11,7 @@ import java.util.List;
 
 public class IngredientTypeConverter {
 
-    private static Gson gson = new Gson();
+    private static final Gson gson = new Gson();
 
     //converting the Lists to String to save in SQL
     @TypeConverter

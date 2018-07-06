@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ public class MainRecycleAdapter extends RecyclerView.Adapter<MainRecycleAdapter.
 
     private List<Recipe> mRecipes;
     private OnItemClickListener mListener;
-    private Context mCOntext;
+    private final Context mCOntext;
 
     public interface OnItemClickListener{
         void OnItemClick(int position);
@@ -54,8 +53,8 @@ public class MainRecycleAdapter extends RecyclerView.Adapter<MainRecycleAdapter.
     }
 
     public class MainAdapterViewHolder extends RecyclerView.ViewHolder{
-        TextView recipeNameTextView;
-        ImageView recipeImage;
+        final TextView recipeNameTextView;
+        final ImageView recipeImage;
 
         MainAdapterViewHolder(final View itemView) {
             super(itemView);
