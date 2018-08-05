@@ -24,6 +24,7 @@ public class Network {
         call.enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+                Log.e("Retrofit, ", "Runs");
                 List<Recipe> recipeList = response.body();
                 saveInDb(context, recipeList);
 

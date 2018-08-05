@@ -3,6 +3,7 @@ package com.example.lanto.bakingtime.ui;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.lanto.bakingtime.NetworkService;
 import com.example.lanto.bakingtime.R;
 import com.example.lanto.bakingtime.data.Ingredient;
 import com.example.lanto.bakingtime.data.Recipe;
@@ -85,7 +87,9 @@ public class MainFragment extends Fragment implements MainRecycleAdapter.OnItemC
         if(savedInstanceState == null) {
             if (isNetworkAvailable(getActivity())) {
                 //refresh database
-                Network.getRecipesAndSaveInDB(getActivity());
+                Log.e("MainFragment,", "Startservice");
+                Intent intent = new Intent(getActivity(), NetworkService.class);
+                getActivity().startService(intent);
             }else {
                 Toast.makeText(getActivity(), R.string.Internet_warning_toast, Toast.LENGTH_LONG).show();
             }
